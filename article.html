@@ -595,6 +595,7 @@
 			<h3 class="voxpop-header">Should European football boycott the next World Cup?</h3>
 			<p class="voxpop-subhead">Send your views to the FT</p>
 			<a class="voxpop-button" href="capture.html">Record your views</a>
+			<img class="voxpop-logo" src="voxpopper_logo.svg"/>
 		</div>
 
 		<style>
@@ -603,9 +604,10 @@
 				padding: 30px;
 				width: 100%;
 				text-align: center;
-				overflow: hidden;
+				clear: both;
 				color: #fff;
 				box-sizing: border-box;
+				position: relative;
 			}
 
 			.voxpop-header {
@@ -637,6 +639,13 @@
 			.voxpop-button:hover {
 				background-color: #006837;
 				color: #fff;
+			}
+			.voxpop-logo {
+				width: 75px;
+			  position: absolute;
+			  top: -25px;
+			  right: -25px;
+			  z-index: 400;
 			}
 
 		</style>
