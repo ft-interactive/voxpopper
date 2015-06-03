@@ -216,14 +216,22 @@
       }
     ];
 
-      var data = localStorage.getItem('voxpop.questions');
+
+      var data = localStorage.getItem('voxpop.data');
+      var published = localStorage.getItem('voxpop.published');
       if(data) {
         data = JSON.parse(data);
       } else {
         data = defaultData;
-        localStorage.setItem('voxpop.questions', JSON.stringify(data));
+        localStorage.setItem('voxpop.data', JSON.stringify(data));
       }
 
+      if(published) {
+        published = JSON.parse(published);
+      } else {
+        published = {};
+        localStorage.setItem('voxpop.published', JSON.stringify(data));
+      }
 
       function newTab(data) {
         var tab = document.createElement('button');
@@ -235,7 +243,7 @@
       var sectionTemplate = function(data) {
         return `<div class="header">
           <h2>${data.title}</h2>
-          <button class="publish">Publish</button>
+          <button class="publish">` + (data.published ? `Unpublish` : `Publish`) + `</button>
           <div class="video-container">
 
           </div>
@@ -287,23 +295,16 @@
       }
 
       function saveData() {
-        localStorage.setItem('voxpop.questions', JSON.stringify(data));
+        localStorage.setItem('voxpop.data', JSON.stringify(data));
       };
-
+      function savePublished() {
+        localStorage.setItem('voxpop.published', JSON.stringify(published));
+      };
       createAll();
 
       Array.prototype.slice.call(document.querySelectorAll('.button-group>button')).map(function(btn) {
         btn.addEventListener('click', function () {
           var alreadyPressed = this.parentElement.querySelector('.button-group button[aria-pressed]');
-
-          var allVideos =Array.prototype.slice.call( document.querySelector('.video-container').children );
-
-          var allTabs =Array.prototype.slice.call( document.querySelector('.tabs').children );
-
-          var index = allVideos.indexOf(closest(this, '.video'));
-          var currentTabIndex = allTabs.indexOf(allTabs.filter(function(tab) {
-            return tab.hasAttribute('aria-pressed');
-          })[0]);
 
           if(this.hasAttribute('aria-pressed')) {
             this.parentElement.parentElement.removeAttribute('data-bucket');
@@ -313,6 +314,16 @@
             if(alreadyPressed) { alreadyPressed.removeAttribute('aria-pressed') };
             this.setAttribute('aria-pressed', '');
           }
+
+
+          var allVideos =Array.prototype.slice.call( document.querySelector('.video-container').children );
+
+          var allTabs =Array.prototype.slice.call( document.querySelector('.tabs').children );
+
+          var index = allVideos.indexOf(closest(this, '.video'));
+          var currentTabIndex = allTabs.indexOf(allTabs.filter(function(tab) {
+            return tab.hasAttribute('aria-pressed');
+          })[0]);
 
           data[currentTabIndex].videos[index].inGroup1 = this.parentElement.querySelector('[value="1"]').hasAttribute('aria-pressed');
           data[currentTabIndex].videos[index].inGroup2 = this.parentElement.querySelector('[value="2"]').hasAttribute('aria-pressed');
@@ -351,7 +362,7 @@
         };
 
         data.push(newPanel);
-        localStorage.setItem('voxpop.questions', JSON.stringify(data));
+        saveData();
         createNewQuestion(newPanel);
 
         var newPanel = document.querySelector('[data-panel-id="' + newTabId + '"]');
@@ -361,6 +372,43 @@
         createPanel.classList.remove('active');
         newTab.setAttribute('aria-pressed', '');
         createTab.removeAttribute('aria-pressed')
+      });
+
+      document.addEventListener('click', function(e) {
+        if(e.target.className !== 'publish') {
+          return;
+        }
+        e.preventDefault();
+
+        var allTabs =Array.prototype.slice.call( document.querySelector('.tabs').children );
+
+        var currentTabIndex = allTabs.indexOf(allTabs.filter(function(tab) {
+          return tab.hasAttribute('aria-pressed');
+        })[0]);
+
+        if(data[currentTabIndex].published) {
+          data[currentTabIndex].published = false;
+          e.target.textContent = "Publish";
+          delete published[data[currentTabIndex].key];
+        } else {
+          e.target.textContent = "Unpublish";
+          data[currentTabIndex].published = true;
+          var grouped = {
+            group1: [],
+            group2: []
+          };
+          data[currentTabIndex].videos.forEach(function(video) {
+            if(video.inGroup1) {
+              grouped.group1.push(video);
+            } else if(video.inGroup2) {
+              grouped.group2.push(video);
+            }
+          });
+          published[data[currentTabIndex].key] = grouped;
+        }
+        saveData();
+        savePublished();
+
       });
 
     </script>
