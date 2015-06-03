@@ -1,6 +1,9 @@
 <html>
   <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--
+    Greens
+    -----------
     green #3CCF00
     drak green #006837
 
@@ -16,13 +19,109 @@
     mid #636363
     dark #424242
     light #ffffff
+
+
+
+    - video capture/camera page
+    - next/FT article -> video capture
+    - Twitter link -> video capture
   -->
+
+  <style>
+    html, body {
+      font-size: 20px;
+      font-family: sans-serif;
+      background-color: #333333;
+    }
+
+    #loading-msg {
+      content "VoxPopper";
+      color: rgba(0,0,0,0.4);
+      display: block;
+      position: fixed;
+      top: 25%;
+      left: 25%;
+      font-size: 2rem;
+
+    }
+
+    #stop {
+      position:fixed;
+      width: 100%;
+      height: 111px;
+      bottom: 0px;
+      background-color: rgba(0,0,0,0.6);
+      font-size: 1rem;
+      outline: none;
+      text-align: center;
+      border: none;
+      padding: 0;
+      display: block;
+    }
+
+    #stop-hit {
+      background: #3CCF00;
+      color: #333333;
+      margin: 10px auto;
+      width: 66%;
+      max-width: 555px;
+      padding: .8rem;
+    }
+
+    #recording {
+      position: fixed;
+      top: 10px;
+      right: 20px;
+      color: red;
+      font-size: 1.5rem;
+      animation: blink 1s steps(5, start) infinite;
+       -webkit-animation: blink 1s steps(5, start) infinite;
+     }
+
+    #recording:before {
+      content: " ";
+      width: 30px;
+      position: relative;
+      top: 5px;
+      height: 30px;
+      display: inline-block;
+      background: red;
+      border-radius: 100%;
+    }
+
+    #basic-stream{
+      position:fixed;
+      width:100%;
+      height:100%;
+      border: 10px solid green;
+    }
+
+
+   @keyframes blink {
+     to {
+       visibility: hidden;
+     }
+   }
+   @-webkit-keyframes blink {
+     to {
+       visibility: hidden;
+     }
+   }
+  </style>
   </head>
-  <body>
-
-
+  <body style="margin:0;">
+    <div id="loading-msg">
+      VoxPopper
+    </div>
 		<video id="basic-stream" class="videostream" autoplay=""></video>
-
+    <div id="recording">
+      REC
+    </div>
+    <button name="button" id="stop">
+      <div id="stop-hit">
+        SEND
+      </div>
+      </button>
     <script>
     	function hasGetUserMedia() {
 			  return !!(navigator.getUserMedia || navigator.webkitGetUserMedia ||
@@ -30,7 +129,7 @@
 			}
 
 			if (hasGetUserMedia()) {
-			    var errorCallback = function(e) {
+			     var errorCallback = function(e) {
 				    console.log('Reeeejected!', e);
 				  };
 					navigator.getUserMedia  = navigator.getUserMedia ||
@@ -55,7 +154,3 @@
     </script>
   </body>
 </html>
-
-- video capture/camera page
-- next/FT article -> video capture
-- Twitter link -> video capture
