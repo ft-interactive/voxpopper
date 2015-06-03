@@ -32,6 +32,13 @@
         font-family: Helvetica, Arial, sans-serif;
       }
 
+      .voxpop-logo {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 75px;
+      }
+
       .video {
         width: 31%;
         float: left;
@@ -103,6 +110,7 @@
       .tabs button {
         font-weight: bold;
         font-size: 16px;
+        margin-right: 4px;
       }
       .tabs button[aria-pressed] {
         background-color: #3CCF00;
@@ -117,93 +125,11 @@
   <body>
 
     <h1>Vox pop</h1>
-
+    <img class="voxpop-logo" src="voxpopper_logo.svg"/>
 
     <div class="tabs">
-      <button aria-pressed data-panel="1">#something</button>
-      <button data-panel="2">Some other question</button>
-
       <button class="create" data-panel="create">+</button>
-
     </div>
-
-    <section class="panel active" data-panel-id="1">
-      <h2>#something</h2>
-
-      <div class="video-container">
-        <div class="video">
-          <video src="http://video.webmfiles.org/big-buck-bunny_trailer.webm" controls poster="http://www.webmfiles.org/wp-content/uploads/2010/05/webm-file.jpg"></video>
-          <span class="username">Arjun Gadhia</span>
-          Published: <time class="timestamp">Just now</time>
-          <div class="button-group">Group:
-            <button name="button" value="yes">yes</button>
-            <button name="button" value="no">no</button>
-          </div>
-        </div>
-
-        <div class="video">
-          <video src="http://video.webmfiles.org/big-buck-bunny_trailer.webm" controls poster="http://www.webmfiles.org/wp-content/uploads/2010/05/webm-file.jpg"></video>
-          <span class="username">Arjun Gadhia</span>
-          Published: <time class="timestamp">Just now</time>
-          <div class="button-group">Group:
-            <button name="button" value="yes">yes</button>
-            <button name="button" value="no">no</button>
-          </div>
-        </div>
-
-
-      </div>
-    </section>
-
-    <section class="panel" data-panel-id="2">
-      <h2>Some other question</h2>
-    </section>
-
-    <section class="panel" data-panel-id="3">
-      <h2>Should European football boycott the next World Cup?</h2>
-
-      <div class="video-container">
-        <div class="video">
-          <video src="http://video.webmfiles.org/big-buck-bunny_trailer.webm" controls poster="http://www.webmfiles.org/wp-content/uploads/2010/05/webm-file.jpg"></video>
-          <span class="username">Arjun Gadhia</span>
-          Published: <time class="timestamp">Just now</time>
-          <div class="button-group">Group:
-            <button name="button" value="yes">yes</button>
-            <button name="button" value="no">no</button>
-          </div>
-        </div>
-
-        <div class="video">
-          <video src="http://video.webmfiles.org/big-buck-bunny_trailer.webm" controls poster="http://www.webmfiles.org/wp-content/uploads/2010/05/webm-file.jpg"></video>
-          <span class="username">Arjun Gadhia</span>
-          Published: <time class="timestamp">Just now</time>
-          <div class="button-group">Group:
-            <button name="button" value="yes">yes</button>
-            <button name="button" value="no">no</button>
-          </div>
-        </div>
-
-        <div class="video">
-          <video src="http://video.webmfiles.org/big-buck-bunny_trailer.webm" controls poster="http://www.webmfiles.org/wp-content/uploads/2010/05/webm-file.jpg"></video>
-          <span class="username">Arjun Gadhia</span>
-          Published: <time class="timestamp">Just now</time>
-          <div class="button-group">Group:
-            <button name="button" value="yes">yes</button>
-            <button name="button" value="no">no</button>
-          </div>
-        </div>
-
-        <div class="video">
-          <video src="http://video.webmfiles.org/big-buck-bunny_trailer.webm" controls poster="http://www.webmfiles.org/wp-content/uploads/2010/05/webm-file.jpg"></video>
-          <span class="username">Arjun Gadhia</span>
-          Published: <time class="timestamp">Just now</time>
-
-          <div class="button-group">Group:
-            <button name="button" value="yes">yes</button>
-            <button name="button" value="no">no</button>
-          </div>
-        </div>
-    </section>
 
     <section class="panel" data-panel-id="create">
       <h2>Create a new callout</h2>
@@ -217,9 +143,151 @@
     </section>
 
     <script>
+
+    function closest(el, selector) {
+        var matchesFn;
+
+        // find vendor prefix
+        ['matches','webkitMatchesSelector','mozMatchesSelector','msMatchesSelector','oMatchesSelector'].some(function(fn) {
+            if (typeof document.body[fn] == 'function') {
+                matchesFn = fn;
+                return true;
+            }
+            return false;
+        })
+
+        // traverse parents
+        while (el!==null) {
+            parent = el.parentElement;
+            if (parent!==null && parent[matchesFn](selector)) {
+                return parent;
+            }
+            el = parent;
+        }
+
+        return null;
+    }
+
+      var defaultData = [
+        {
+          id: 1,
+          title: "Title 1",
+          published: "false",
+          videos: [
+            {
+              src: "http://video.webmfiles.org/big-buck-bunny_trailer.webm",
+              poster: "http://www.webmfiles.org/wp-content/uploads/2010/05/webm-file.jpg",
+              username: "Arjun Gadhia",
+              timestamp: "just now",
+              inGroup1: true,
+              inGroup2: false
+            },
+            {
+              src: "http://video.webmfiles.org/big-buck-bunny_trailer.webm",
+              poster: "http://www.webmfiles.org/wp-content/uploads/2010/05/webm-file.jpg",
+              username: "Other User",
+              timestamp: "5 hours ago",
+              inGroup1: true,
+              inGroup2: false
+            }
+          ]
+        },
+        {
+          id: 2,
+          title: "Title 2",
+          published: "false",
+          videos: []
+        }
+      ];
+
+      var data = localStorage.getItem('voxpop.questions');
+      if(data) {
+        data = JSON.parse(data);
+      } else {
+        data = defaultData;
+        localStorage.setItem('voxpop.questions', JSON.stringify(data));
+      }
+
+
+      function newTab(data) {
+        var tab = document.createElement('button');
+        tab.setAttribute('data-panel', data.id);
+        tab.textContent = data.title;
+        return tab;
+      }
+
+      var sectionTemplate = function(data) {
+        return `<div class="header">
+          <h2>${data.title}</h2>
+          <button class="publish">Publish</button>
+          <div class="video-container">
+
+          </div>
+        </div>`
+      }
+
+      var videoTemplate = function(video) {
+
+        return `
+          <div class="video"` + ((video.inGroup1 || video.inGroup2) ? ` data-bucket ` : ``) + `>
+            <video src="${video.src}" controls poster="${video.poster}"></video>
+            <span class="username">${video.username}</span>
+            Published: <time class="timestamp">${video.timestamp}</time>
+            <div class="button-group">Group:
+              <button name="button" value="1"` + (video.inGroup1 ? ` aria-pressed` : ``) + `>yes</button>
+              <button name="button" value="2"` + (video.inGroup2 ? ` aria-pressed` : ``) + `>no</button>
+            </div>
+          </div>`
+      }
+
+      function newPanel(data) {
+        var panel = document.createElement('section');
+        panel.classList.add('panel');
+        panel.setAttribute('data-panel-id', data.id);
+        panel.innerHTML = sectionTemplate(data);
+        return panel;
+      }
+
+      function createNewQuestion(panelData) {
+
+        var createTab = document.querySelector('[data-panel="create"]');
+        var createPanel = document.querySelector('[data-panel-id="create"]');
+
+        if(document.querySelector('[data-panel-id="' + panelData.id + '"]')) {
+            return;
+          }
+          createTab.parentElement.insertBefore(newTab(panelData), createTab);
+          createPanel.parentElement.insertBefore(newPanel(panelData), createPanel);
+          var videoContainer = document.querySelector('[data-panel-id="' + panelData.id + '"] .video-container');
+          panelData.videos.forEach(function(videoData) {
+            videoContainer.insertAdjacentHTML('beforeend', videoTemplate(videoData));
+
+          });
+      }
+      function createAll() {
+        data.forEach(createNewQuestion);
+        document.querySelector('[data-panel]').setAttribute('aria-pressed', '');
+        document.querySelector('[data-panel-id]').classList.add('active');
+      }
+
+      function saveData() {
+        localStorage.setItem('voxpop.questions', JSON.stringify(data));
+      };
+
+      createAll();
+
       Array.prototype.slice.call(document.querySelectorAll('.button-group>button')).map(function(btn) {
         btn.addEventListener('click', function () {
           var alreadyPressed = this.parentElement.querySelector('.button-group button[aria-pressed]');
+
+          var allVideos =Array.prototype.slice.call( document.querySelector('.video-container').children );
+
+          var allTabs =Array.prototype.slice.call( document.querySelector('.tabs').children );
+
+          var index = allVideos.indexOf(closest(this, '.video'));
+          var currentTabIndex = allTabs.indexOf(allTabs.filter(function(tab) {
+            return tab.hasAttribute('aria-pressed');
+          })[0]);
 
           if(this.hasAttribute('aria-pressed')) {
             this.parentElement.parentElement.removeAttribute('data-bucket');
@@ -229,12 +297,14 @@
             if(alreadyPressed) { alreadyPressed.removeAttribute('aria-pressed') };
             this.setAttribute('aria-pressed', '');
           }
+
+          data[currentTabIndex].videos[index].inGroup1 = this.parentElement.querySelector('[value="1"]').hasAttribute('aria-pressed');
+          data[currentTabIndex].videos[index].inGroup2 = this.parentElement.querySelector('[value="2"]').hasAttribute('aria-pressed');
+
+          saveData();
         });
       });
 
-    </script>
-
-  <script>
         document.querySelector('.tabs').addEventListener('click', function (e) {
           if(e.target.tagName !== 'BUTTON') {
             return;
@@ -250,28 +320,26 @@
           }
         });
 
-    </script>
-
-    <script>
       document.querySelector('#create-form').addEventListener('submit', function(e) {
         e.preventDefault();
-        console.log('submit', this);
+
         var createTab = document.querySelector('[data-panel="create"]');
         var createPanel = document.querySelector('[data-panel-id="create"]');
         var lastTab = createTab.previousElementSibling;
         var newTabId =  parseInt(lastTab.getAttribute('data-panel')) + 1;
-        var newTab = lastTab.cloneNode();
-
-        newTab.textContent = document.forms[0].title.value;
-        newTab.setAttribute('data-panel', newTabId);
-        createTab.parentElement.insertBefore(newTab, createTab);
+        var newPanel = {
+          id: newTabId,
+          title: document.forms[0].title.value,
+          published: false,
+          videos: []
+        };
+        data.push(newPanel);
+        localStorage.setItem('voxpop.questions', JSON.stringify(data));
+        createNewQuestion(newPanel);
 
         var newPanel = document.querySelector('[data-panel-id="' + newTabId + '"]');
-        if(!newPanel) {
-          newPanel = document.createElement('section');
-          newPanel.setAttribute('data-panel-id', newPanelId);
-          newPanel.innerHTML = '<h2>' + document.forms[0].title.value + '</h2>';
-        }
+        var newTab = document.querySelector('[data-panel="' + newTabId + '"]');
+
         newPanel.classList.add('active');
         createPanel.classList.remove('active');
         newTab.setAttribute('aria-pressed', '');
