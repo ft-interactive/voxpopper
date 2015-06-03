@@ -216,7 +216,7 @@
     <div id="loading-msg">
       Vox Popper
     </div>
-		<video id="basic-stream" class="videostream" autoplay=""></video>
+		<video id="basic-stream" class="videostream" autoplay="" muted></video>
     <div id="recording">
       REC
     </div>
@@ -268,8 +268,9 @@
                           navigator.mozGetUserMedia ||
                           navigator.msGetUserMedia;
 				  // Not showing vendor prefixes.
+			    var video = document.querySelector('video');
+
 				  navigator.getUserMedia({video: true, audio: true}, function(localMediaStream) {
-				    var video = document.querySelector('video');
 				    video.src = window.URL.createObjectURL(localMediaStream);
 
 				    // Note: onloadedmetadata doesn't fire in Chrome when using it with getUserMedia.

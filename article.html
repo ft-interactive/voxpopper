@@ -590,17 +590,23 @@
 
 		</div>
 
-
-				<div class="voxpop">
+		<div class="voxpop">
+			<div class="voxpop-question">
 			<h3 class="voxpop-header">Should European football boycott the next World Cup?</h3>
 			<p class="voxpop-subhead">Send your views to the FT</p>
 			<a class="voxpop-button" href="capture.html">Record your views</a>
+			</div>
+			<div class="voxpop-branding">
+			<span class="voxpop-branding-text">Man in the street for the digital age</span>
 			<img class="voxpop-logo" src="voxpopper_logo.svg"/>
+			</div>
 		</div>
 
 		<style>
 			.voxpop {
-				background: #505050;
+				clear: both;
+			}
+			.voxpop-question {
 				padding: 30px;
 				width: 100%;
 				text-align: center;
@@ -608,22 +614,39 @@
 				color: #fff;
 				box-sizing: border-box;
 				position: relative;
+
+			}
+			.voxpop-question:after {
+				position: absolute;
+				background-color: #3CCF00;
+				background-image: url('stadium-bg.png');
+				background-size: cover;
+				content: '';
+				width: 100%;
+				height: 100%;
+				top: 0;
+				left: 0;
+				z-index: -1;
 			}
 
 			.voxpop-header {
 				font-size: 30px;
-				font-family: MetricSans, Arial;
+				font-family: Helvetica, Arial, sans-serif;
 				color: #fff;
 			}
 
 			.voxpop-header {
 				font-size: 30px;
-				font-family: MetricSans, Arial;
+				font-family: Helvetica, Arial, sans-serif;
 			}
 
 			.voxpop-button {
-				background-color: #3CCF00;
-				color: #333;
+				background-color: #fff;
+				color:  #3CCF00;
+				border: 1px solid #333;
+				border-bottom-width: 3px;
+
+				border-radius: 4px;
 				text-align: center;
 				width: 100%;
 				font-size: 18px;
@@ -632,7 +655,6 @@
 			  padding: 20px;
 			  margin: 0;
 			  display: block;
-			  color: #424242;
 			  box-sizing: border-box;
 			}
 
@@ -640,12 +662,35 @@
 				background-color: #006837;
 				color: #fff;
 			}
+			.voxpop-branding {
+				position: relative;
+				z-index: 2;
+				text-align: right;
+				padding: 0;
+			}
+			.voxpop-branding:after {
+				position: absolute;
+				background-color: #636363;
+				content: '';
+				width: 100%;
+				height: 100%;
+				top: 0;
+				left: 0;
+				z-index: -1;
+				opacity: 0.8;
+			}
+			.voxpop-branding-text {
+				display: inline-block;
+			  margin-right: 60px;
+			  font-size: 14px;
+			  padding: 10px;
+			  color: #fff;
+			}
 			.voxpop-logo {
-				width: 75px;
+				width: 60px;
 			  position: absolute;
-			  top: -25px;
-			  right: -10px;
-			  z-index: 400;
+			  right: 0px;
+			  top: -12px;
 			}
 
 		</style>
