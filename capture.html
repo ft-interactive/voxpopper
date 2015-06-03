@@ -32,48 +32,59 @@
     <meta name="twitter:title" content="VoxPopper">
     <meta name="twitter:description" content="Should European football associations boycott the next World Cup? Get your opinions heard.">
     <meta name="twitter:image" content="http://ft-interactive.github.io/voxpopper/sepp.png" />
-  </head>
-  <body>
-
   <style>
+
+    * {
+      box-sizing: border-box;
+    }
+
     html, body {
       font-size: 20px;
       font-family: sans-serif;
-      background-color: #333333;
+      background-color: #101010;
+      -webkit-font-smoothing: antialiased;
+      margin: 0;
     }
 
     #loading-msg {
-      content "VoxPopper";
-      color: rgba(0,0,0,0.4);
+      color: #212121;
+      font-weight: bold;
       display: block;
       position: fixed;
-      top: 25%;
-      left: 25%;
-      font-size: 2rem;
-
+      top: 5%;
+      left: 2%;
+      font-size: 6.5rem;
+      line-height: .8;
+      opacity: 0.8;
     }
 
     #stop {
       position:fixed;
-      width: 100%;
       height: 111px;
-      bottom: 0px;
-      background-color: rgba(0,0,0,0.6);
+      width: 100%;
+      border: 10px solid transparent;
+      background-color: rgba(0,0,0, 0.5);
       font-size: 1rem;
       outline: none;
       text-align: center;
-      border: none;
       padding: 0;
       display: block;
+      transition: all 100ms ease-out;
+      bottom: -100%;
     }
 
     #stop-hit {
-      background: #3CCF00;
-      color: #333333;
+      background: transparent;
+      color: #fff;
       margin: 10px auto;
       width: 66%;
       max-width: 555px;
       padding: .8rem;
+      text-shadow: 5px 1px 8px rgba(0,0,0, 0.2);
+    }
+
+    body[data-step="recording"] #stop {
+      bottom: 0;
     }
 
     #recording {
@@ -82,6 +93,8 @@
       right: 20px;
       color: red;
       font-size: 1.5rem;
+      transform: translateZ(0);
+      text-shadow: 5px 1px 8px rgba(0,0,0, 0.2);
       animation: blink 1s steps(5, start) infinite;
        -webkit-animation: blink 1s steps(5, start) infinite;
      }
@@ -97,11 +110,93 @@
       border-radius: 100%;
     }
 
+    body:not([data-step="recording"]) #recording {
+      opacity: 0;
+    }
+
     #basic-stream{
       position:fixed;
       width:100%;
       height:100%;
-      border: 10px solid green;
+      object-fit: cover;
+      transition: all 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94);
+    }
+
+    body:not([data-step="recording"]) #basic-stream{
+      transform: translate(0, 120%);
+    }
+
+    #send {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 100%;
+      transition: all 222ms 444ms cubic-bezier(0.17, 0.04, 0.03, 0.94);
+      background-color: #fff;
+    }
+
+    [data-step="sending"] #send {
+      top: 0;
+    }
+
+    #send {
+      padding: 1rem;
+    }
+
+    #contributor-name {
+      margin: 2rem auto 0 auto;
+      width: 100%;
+      max-width: 555px;
+      display: block;
+      border: 3px solid #3CCF00;
+      font-size: 2rem;
+      padding: .5rem;
+      text-align: center;
+    }
+
+
+    #contributor-name:focus {
+      outline: 3px solid #3CCF00;
+    }
+
+    #complete {
+      display: block;
+      width: 100%;
+      max-width: 555px;
+      margin: 1rem auto;
+      font-size: 2rem;
+      border: none;
+      background-color: #3CCF00;
+      padding: 1rem;
+      color: #fff;
+      font-weight: bold;
+    }
+
+    #thanks {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      background-color: #3CCF00;
+      color: #fff;
+      font-size: 2rem;
+      top: 100%;
+      transition: all 222ms 444ms cubic-bezier(0.17, 0.04, 0.03, 0.94);
+      padding: 1.5rem 1rem;
+    }
+
+    #thanks h1 {
+      margin: 0;
+    }
+
+    #thanks a{
+      text-decoration: none;
+      background-color: rgba(255,255,255,0.3);
+      color: #fff;
+      padding: 4px;
+    }
+
+    [data-step="thanks"] #thanks {
+      transform: translate(0, -100%);
     }
 
 
@@ -117,9 +212,9 @@
    }
   </style>
   </head>
-  <body style="margin:0;">
+  <body data-step="recording">
     <div id="loading-msg">
-      VoxPopper
+      Vox Popper
     </div>
 		<video id="basic-stream" class="videostream" autoplay="" muted></video>
     <div id="recording">
@@ -127,10 +222,38 @@
     </div>
     <button name="button" id="stop">
       <div id="stop-hit">
-        SEND
+        Stop recording
       </div>
       </button>
+    <div id="send">
+      <form id="send-form" action="index.html" method="post">
+
+      <input id="contributor-name" type="text" name="some_name" value="" placeholder="your name" autofocus>
+      <button type="submit" id="complete">Send</button>
+      </form>
+    </div>
+    <div id="thanks">
+      <h1>Thanks</h1>
+      <p>
+        Your video<br>has been<br>sent to <a href="#">@FT</a>.
+      </p>
+      <p style="font-size:1.2rem"><br>
+        <a href="#">Read the article &raquo;</a>
+      </p>
+    </div>
     <script>
+
+    document.getElementById('send-form').onsubmit = function(event) {
+      event.preventDefault();
+      document.activeElement.blur();
+    }
+
+    document.getElementById('complete').onclick = function() {
+      setTimeout(function(){
+        document.body.setAttribute('data-step', 'thanks');
+      }, 100);
+    };
+
     	function hasGetUserMedia() {
 			  return !!(navigator.getUserMedia || navigator.webkitGetUserMedia ||
 			            navigator.mozGetUserMedia || navigator.msGetUserMedia);
@@ -155,6 +278,15 @@
 				    video.onloadedmetadata = function(e) {
 				      // Ready to go. Do some stuff.
 				    };
+
+            document.getElementById('stop').onclick = function() {
+              video.pause();
+              localMediaStream.stop(); // Doesn't do anything in Chrome.
+              document.body.setAttribute('data-step', 'sending');
+              setTimeout(function(){
+                document.getElementById('contributor-name').focus();
+              }, 800);
+            };
 				  }, errorCallback);
 			} else {
 			  alert('getUserMedia() is not supported in your browser');
