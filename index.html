@@ -36,11 +36,11 @@
         width: 31%;
         float: left;
         margin: 1%;
-        border: 1px solid #333333;
+        border: 1px solid #EFEFEF;
         box-sizing: border-box;
         position: relative;
         padding: 10px;
-        font-size: 12px;
+        font-size: 16px;
         font-weight: bold;
       }
 
@@ -58,7 +58,7 @@
         background: rgba(0,0,0,0.8);
         top: 0; left: 0;
         color: #fff;
-        font-size: 12px;
+        font-size: 14px;
         padding: 2px;
       }
       .timestamp {
@@ -72,14 +72,44 @@
         margin-bottom: 10px;
       }
 
-      button {
+      .button-group button {
         background:#EFEFEF;
         border: #505050;
         padding: 4px;
       }
-      button[aria-pressed] {
+      .button-group button[aria-pressed] {
         background: #006837;
         color: #fff;
+      }
+      .panel {
+        display: none;
+      }
+      .panel.active {display: block}
+
+      .tabs {
+        border-bottom: 4px solid #3CCF00;
+      }
+      button {
+        background-color: #EFEFEF;
+        border: none;
+        padding: 5px;
+        font-size: 16px;
+        cursor: pointer;
+      }
+      button:hover {
+        background: #636363;
+        color: #3CCF00;
+      }
+      .tabs button {
+        font-weight: bold;
+        font-size: 16px;
+      }
+      .tabs button[aria-pressed] {
+        background-color: #3CCF00;
+        color: #fff;
+      }
+      .create {
+        margin-left: 3px;
       }
 
     </style>
@@ -87,56 +117,109 @@
   <body>
 
     <h1>Vox pop</h1>
-    <h2>Should the European football boycott the World cup?</h2>
-    should countries the Quatri worlds cup over corruption allegations.
 
-    <div class="video-container">
-      <div class="video">
-        <video src="http://video.webmfiles.org/big-buck-bunny_trailer.webm" controls poster="http://www.webmfiles.org/wp-content/uploads/2010/05/webm-file.jpg"></video>
-        <span class="username">Arjun Gadhia</span>
-        Published: <time class="timestamp">Just now</time>
-        <div class="button-group">Group:
-          <button name="button" value="yes">yes</button>
-          <button name="button" value="no">no</button>
-        </div>
-      </div>
 
-      <div class="video">
-        <video src="http://video.webmfiles.org/big-buck-bunny_trailer.webm" controls poster="http://www.webmfiles.org/wp-content/uploads/2010/05/webm-file.jpg"></video>
-        <span class="username">Arjun Gadhia</span>
-        Published: <time class="timestamp">Just now</time>
-        <div class="button-group">Group:
-          <button name="button" value="yes">yes</button>
-          <button name="button" value="no">no</button>
-        </div>
-      </div>
+    <div class="tabs">
+      <button aria-pressed data-panel="1">#something</button>
+      <button data-panel="2">Some other question</button>
 
-      <div class="video">
-        <video src="http://video.webmfiles.org/big-buck-bunny_trailer.webm" controls poster="http://www.webmfiles.org/wp-content/uploads/2010/05/webm-file.jpg"></video>
-        <span class="username">Arjun Gadhia</span>
-        Published: <time class="timestamp">Just now</time>
-        <div class="button-group">Group:
-          <button name="button" value="yes">yes</button>
-          <button name="button" value="no">no</button>
-        </div>
-      </div>
+      <button class="create" data-panel="create">+</button>
 
-      <div class="video">
-        <video src="http://video.webmfiles.org/big-buck-bunny_trailer.webm" controls poster="http://www.webmfiles.org/wp-content/uploads/2010/05/webm-file.jpg"></video>
-        <span class="username">Arjun Gadhia</span>
-        Published: <time class="timestamp">Just now</time>
-
-        <div class="button-group">Group:
-          <button name="button" value="yes">yes</button>
-          <button name="button" value="no">no</button>
-        </div>
-      </div>
     </div>
 
+    <section class="panel active" data-panel-id="1">
+      <h2>#something</h2>
+
+      <div class="video-container">
+        <div class="video">
+          <video src="http://video.webmfiles.org/big-buck-bunny_trailer.webm" controls poster="http://www.webmfiles.org/wp-content/uploads/2010/05/webm-file.jpg"></video>
+          <span class="username">Arjun Gadhia</span>
+          Published: <time class="timestamp">Just now</time>
+          <div class="button-group">Group:
+            <button name="button" value="yes">yes</button>
+            <button name="button" value="no">no</button>
+          </div>
+        </div>
+
+        <div class="video">
+          <video src="http://video.webmfiles.org/big-buck-bunny_trailer.webm" controls poster="http://www.webmfiles.org/wp-content/uploads/2010/05/webm-file.jpg"></video>
+          <span class="username">Arjun Gadhia</span>
+          Published: <time class="timestamp">Just now</time>
+          <div class="button-group">Group:
+            <button name="button" value="yes">yes</button>
+            <button name="button" value="no">no</button>
+          </div>
+        </div>
+
+
+      </div>
+    </section>
+
+    <section class="panel" data-panel-id="2">
+      <h2>Some other question</h2>
+    </section>
+
+    <section class="panel" data-panel-id="3">
+      <h2>Should European football boycott the next World Cup?</h2>
+
+      <div class="video-container">
+        <div class="video">
+          <video src="http://video.webmfiles.org/big-buck-bunny_trailer.webm" controls poster="http://www.webmfiles.org/wp-content/uploads/2010/05/webm-file.jpg"></video>
+          <span class="username">Arjun Gadhia</span>
+          Published: <time class="timestamp">Just now</time>
+          <div class="button-group">Group:
+            <button name="button" value="yes">yes</button>
+            <button name="button" value="no">no</button>
+          </div>
+        </div>
+
+        <div class="video">
+          <video src="http://video.webmfiles.org/big-buck-bunny_trailer.webm" controls poster="http://www.webmfiles.org/wp-content/uploads/2010/05/webm-file.jpg"></video>
+          <span class="username">Arjun Gadhia</span>
+          Published: <time class="timestamp">Just now</time>
+          <div class="button-group">Group:
+            <button name="button" value="yes">yes</button>
+            <button name="button" value="no">no</button>
+          </div>
+        </div>
+
+        <div class="video">
+          <video src="http://video.webmfiles.org/big-buck-bunny_trailer.webm" controls poster="http://www.webmfiles.org/wp-content/uploads/2010/05/webm-file.jpg"></video>
+          <span class="username">Arjun Gadhia</span>
+          Published: <time class="timestamp">Just now</time>
+          <div class="button-group">Group:
+            <button name="button" value="yes">yes</button>
+            <button name="button" value="no">no</button>
+          </div>
+        </div>
+
+        <div class="video">
+          <video src="http://video.webmfiles.org/big-buck-bunny_trailer.webm" controls poster="http://www.webmfiles.org/wp-content/uploads/2010/05/webm-file.jpg"></video>
+          <span class="username">Arjun Gadhia</span>
+          Published: <time class="timestamp">Just now</time>
+
+          <div class="button-group">Group:
+            <button name="button" value="yes">yes</button>
+            <button name="button" value="no">no</button>
+          </div>
+        </div>
+    </section>
+
+    <section class="panel" data-panel-id="create">
+      <h2>Create a new callout</h2>
+
+      <form id="create-form">
+        <label>Title</label>
+        <input name="title" id="title" type="text"/>
+        <input name="submit" type="submit" value="Create"/>
+      </form>
+
+    </section>
+
     <script>
-      Array.prototype.slice.call(document.querySelectorAll('button')).map(function(btn) {
+      Array.prototype.slice.call(document.querySelectorAll('.button-group>button')).map(function(btn) {
         btn.addEventListener('click', function () {
-          var alreadyPressed = this.parentElement.querySelector('button[aria-pressed');
+          var alreadyPressed = this.parentElement.querySelector('.button-group button[aria-pressed]');
 
           if(this.hasAttribute('aria-pressed')) {
             this.parentElement.parentElement.removeAttribute('data-bucket');
@@ -147,6 +230,52 @@
             this.setAttribute('aria-pressed', '');
           }
         });
+      });
+
+    </script>
+
+  <script>
+        document.querySelector('.tabs').addEventListener('click', function (e) {
+          if(e.target.tagName !== 'BUTTON') {
+            return;
+          }
+          var alreadyPressed = e.target.parentElement.querySelector('[aria-pressed]');
+          var activePanel = document.querySelector('.panel.active');
+
+          if(e.target !== alreadyPressed) {
+            alreadyPressed.removeAttribute('aria-pressed');
+            activePanel.classList.remove('active');
+            e.target.setAttribute('aria-pressed', '');
+            document.querySelector('[data-panel-id="' + e.target.getAttribute('data-panel') + '"]').classList.add('active');
+          }
+        });
+
+    </script>
+
+    <script>
+      document.querySelector('#create-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        console.log('submit', this);
+        var createTab = document.querySelector('[data-panel="create"]');
+        var createPanel = document.querySelector('[data-panel-id="create"]');
+        var lastTab = createTab.previousElementSibling;
+        var newTabId =  parseInt(lastTab.getAttribute('data-panel')) + 1;
+        var newTab = lastTab.cloneNode();
+
+        newTab.textContent = document.forms[0].title.value;
+        newTab.setAttribute('data-panel', newTabId);
+        createTab.parentElement.insertBefore(newTab, createTab);
+
+        var newPanel = document.querySelector('[data-panel-id="' + newTabId + '"]');
+        if(!newPanel) {
+          newPanel = document.createElement('section');
+          newPanel.setAttribute('data-panel-id', newPanelId);
+          newPanel.innerHTML = '<h2>' + document.forms[0].title.value + '</h2>';
+        }
+        newPanel.classList.add('active');
+        createPanel.classList.remove('active');
+        newTab.setAttribute('aria-pressed', '');
+        createTab.removeAttribute('aria-pressed')
       });
 
     </script>
