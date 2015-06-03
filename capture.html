@@ -38,15 +38,23 @@
       box-sizing: border-box;
     }
 
+    ::-webkit-input-placeholder {
+      color: #3CCF00;
+      opacity: 0.3;
+      padding: 0;
+    }
+
     html, body {
       font-size: 20px;
       font-family: sans-serif;
-      background-color: #101010;
+      background: #1c1c1c url('voxpopper_logo-dark.svg') no-repeat center 20%;
+      background-size: 60% auto;
       -webkit-font-smoothing: antialiased;
       margin: 0;
     }
 
-    #loading-msg {
+
+    #loading {
       color: #212121;
       font-weight: bold;
       display: block;
@@ -58,13 +66,43 @@
       opacity: 0.8;
     }
 
-    #stop {
+    #start{
+      display: none;
       position:fixed;
       height: 111px;
       width: 100%;
       border: 10px solid transparent;
       background-color: rgba(0,0,0, 0.5);
-      font-size: 1rem;
+      outline: none;
+      text-align: center;
+      padding: 0;
+      bottom: 0;
+    }
+
+    #start-hit {
+      border: 2px solid rgba(0,0,0,0.8);
+      background-color: rgba(255,255,255,0.8);
+      color: #000;
+      border-radius: 7px;
+      padding: .5rem;
+      width: 260px;
+      font-size: 1.3rem;
+      margin: 0 auto;
+      background-clip: padding-box;
+      text-shadow: 5px 1px 6px #fff;
+    }
+
+    .not-started #start {
+      display: block;
+    }
+
+
+    #stop {
+      position:fixed;
+      height: 111px;
+      width: 100%;
+      border: 10px solid transparent;
+      background-color: transparent;
       outline: none;
       text-align: center;
       padding: 0;
@@ -73,13 +111,20 @@
       bottom: -100%;
     }
 
+    .not-started #stop {
+      display: none;
+    }
+
     #stop-hit {
-      background: transparent;
+      border: 2px solid rgba(0,0,0,0.8);
+      background-color: rgba(0,0,0,0.3);
       color: #fff;
-      margin: 10px auto;
-      width: 66%;
-      max-width: 555px;
-      padding: .8rem;
+      border-radius: 7px;
+      padding: .5rem;
+      width: 260px;
+      font-size: 1.3rem;
+      margin: 0 auto;
+      background-clip: padding-box;
       text-shadow: 5px 1px 8px rgba(0,0,0, 0.2);
     }
 
@@ -95,8 +140,14 @@
       font-size: 1.5rem;
       transform: translateZ(0);
       text-shadow: 5px 1px 8px rgba(0,0,0, 0.2);
+      transition: opacity 0.2s ease-out;
+      opacity: 1;
       animation: blink 1s steps(5, start) infinite;
        -webkit-animation: blink 1s steps(5, start) infinite;
+     }
+
+     .not-started #recording {
+       opacity: 0;
      }
 
     #recording:before {
@@ -123,7 +174,7 @@
     }
 
     body:not([data-step="recording"]) #basic-stream{
-      transform: translate(0, 120%);
+      transform: translate(0, 110%);
     }
 
     #send {
@@ -172,6 +223,11 @@
       font-weight: bold;
     }
 
+    #complete[disabled] {
+      background-color: transparent;
+      color: black;
+    }
+
     #thanks {
       position: fixed;
       width: 100%;
@@ -212,19 +268,24 @@
    }
   </style>
   </head>
-  <body data-step="recording">
-    <div id="loading-msg">
-      Vox Popper
-    </div>
+  <body data-step="recording" class="not-started">
 		<video id="basic-stream" class="videostream" autoplay="" muted></video>
     <div id="recording">
       REC
     </div>
+
+    <button name="button" id="start">
+      <div id="start-hit">
+        Start recording
+      </div>
+    </button>
+
+
     <button name="button" id="stop">
       <div id="stop-hit">
-        Stop recording
+        Stop
       </div>
-      </button>
+    </button>
     <div id="send">
       <form id="send-form" action="index.html" method="post">
 
@@ -238,19 +299,33 @@
         Your video<br>has been<br>sent to <a href="#">@FT</a>.
       </p>
       <p style="font-size:1.2rem"><br>
-        <a href="#">Read the article &raquo;</a>
+        <a href="article.html">Read the article &raquo;</a>
+      </p>
+      <p style="font-size:0.5rem;text-align:right;position:absolute;bottom:20px;right:20px;opacity:0.7;">
+        Powered by
+      <img src="voxpopper_logo-white.svg" alt="" style="height:auto;width:44px;display:block;float:right;" />
       </p>
     </div>
     <script>
+
+    document.getElementById('start').onclick = function() {
+      setTimeout(function(){
+        document.body.classList.remove('not-started');
+      }, 111);
+    }
 
     document.getElementById('send-form').onsubmit = function(event) {
       event.preventDefault();
       document.activeElement.blur();
     }
 
-    document.getElementById('complete').onclick = function() {
+    document.getElementById('complete').onclick = function(event) {
       setTimeout(function(){
-        document.body.setAttribute('data-step', 'thanks');
+        event.target.disabled = true;
+        event.target.textContent = 'Sending...';
+        setTimeout(function(){
+          document.body.setAttribute('data-step', 'thanks');
+        }, 100);
       }, 100);
     };
 
