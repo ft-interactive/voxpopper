@@ -1,6 +1,6 @@
 <html>
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
      <!--
     Greens
     -----------
@@ -27,194 +27,194 @@
     - Twitter link -> video capture
   -->
 
-    <style>
-      body {
-        font-family: Helvetica, Arial, sans-serif;
-      }
+  <style>
+    body {
+      font-family: Helvetica, Arial, sans-serif;
+    }
 
-      .voxpop-logo {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        width: 75px;
-      }
+    .voxpop-logo {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 75px;
+    }
 
-      .video {
-        width: 31%;
-        float: left;
-        margin: 1%;
-        border: 1px solid #EFEFEF;
-        box-sizing: border-box;
-        position: relative;
-        padding: 10px;
-        font-size: 16px;
-        font-weight: bold;
-      }
+    .video {
+      width: 31%;
+      float: left;
+      margin: 1%;
+      border: 1px solid #EFEFEF;
+      box-sizing: border-box;
+      position: relative;
+      padding: 10px;
+      font-size: 16px;
+      font-weight: bold;
+    }
 
-      .video[data-bucket]:after {
-        content: '✓';
-        font-size: 32px;
-        position: absolute;
-        top: 10px;
-        right: 20px;
-        color: #3CCF00;
-      }
+    .video[data-bucket]:after {
+      content: '✓';
+      font-size: 32px;
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      color: #3CCF00;
+    }
 
-      .username {
-        position: absolute;
-        background: rgba(0,0,0,0.8);
-        top: 0; left: 0;
-        color: #fff;
-        font-size: 14px;
-        padding: 2px;
-      }
-      .timestamp {
-        font-size: 10px;
-        text-transform: uppercase;
-        font-weight: normal;
-      }
+    .username {
+      position: absolute;
+      background: rgba(0,0,0,0.8);
+      top: 0; left: 0;
+      color: #fff;
+      font-size: 14px;
+      padding: 2px;
+    }
+    .timestamp {
+      font-size: 10px;
+      text-transform: uppercase;
+      font-weight: normal;
+    }
 
-      .video video {
-        width: 100%;
-        margin-bottom: 10px;
-      }
+    .video video {
+      width: 100%;
+      margin-bottom: 10px;
+    }
 
-      .button-group button {
-        background:#EFEFEF;
-        border: #505050;
-        padding: 4px;
-      }
-      .button-group button[aria-pressed] {
-        background: #006837;
-        color: #fff;
-      }
-      .panel {
-        display: none;
-      }
-      .panel.active {display: block}
+    .button-group button {
+      background:#EFEFEF;
+      border: #505050;
+      padding: 4px;
+    }
+    .button-group button[aria-pressed] {
+      background: #006837;
+      color: #fff;
+    }
+    .panel {
+      display: none;
+    }
+    .panel.active {display: block}
 
-      .tabs {
-        border-bottom: 4px solid #3CCF00;
-      }
-      button {
-        background-color: #EFEFEF;
-        border: none;
-        padding: 5px;
-        font-size: 16px;
-        cursor: pointer;
-      }
-      button:hover {
-        background: #636363;
-        color: #3CCF00;
-      }
-      .tabs button {
-        font-weight: bold;
-        font-size: 16px;
-        margin-right: 4px;
-      }
-      .tabs button[aria-pressed] {
-        background-color: #3CCF00;
-        color: #fff;
-      }
-      .create {
-        margin-left: 3px;
-      }
+    .tabs {
+      border-bottom: 4px solid #3CCF00;
+    }
+    button {
+      background-color: #EFEFEF;
+      border: none;
+      padding: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #636363;
+      color: #3CCF00;
+    }
+    .tabs button {
+      font-weight: bold;
+      font-size: 16px;
+      margin-right: 4px;
+    }
+    .tabs button[aria-pressed] {
+      background-color: #3CCF00;
+      color: #fff;
+    }
+    .create {
+      margin-left: 3px;
+    }
 
-    </style>
-  </head>
-  <body>
+  </style>
+</head>
+<body>
 
-    <h1>Vox pop</h1>
-    <img class="voxpop-logo" src="voxpopper_logo.svg"/>
+  <h1>Vox pop</h1>
+  <img class="voxpop-logo" src="voxpopper_logo.svg"/>
 
-    <div class="tabs">
-      <button class="create" data-panel="create">+</button>
-    </div>
+  <div class="tabs">
+    <button class="create" data-panel="create">+</button>
+  </div>
 
-    <section class="panel" data-panel-id="create">
-      <h2>Create a new callout</h2>
+  <section class="panel" data-panel-id="create">
+    <h2>Create a new callout</h2>
 
-      <form id="create-form">
-        <label>Title</label>
-        <input name="title" id="title" type="text"/>
-        <input name="submit" type="submit" value="Create"/>
-      </form>
+    <form id="create-form">
+      <label>Title</label>
+      <input name="title" id="title" type="text"/>
+      <input name="submit" type="submit" value="Create"/>
+    </form>
 
-    </section>
+  </section>
 
-    <script>
+  <script>
 
     function closest(el, selector) {
-        var matchesFn;
+      var matchesFn;
 
         // find vendor prefix
         ['matches','webkitMatchesSelector','mozMatchesSelector','msMatchesSelector','oMatchesSelector'].some(function(fn) {
-            if (typeof document.body[fn] == 'function') {
-                matchesFn = fn;
-                return true;
-            }
-            return false;
+          if (typeof document.body[fn] == 'function') {
+            matchesFn = fn;
+            return true;
+          }
+          return false;
         })
 
         // traverse parents
         while (el!==null) {
-            parent = el.parentElement;
-            if (parent!==null && parent[matchesFn](selector)) {
-                return parent;
-            }
-            el = parent;
+          parent = el.parentElement;
+          if (parent!==null && parent[matchesFn](selector)) {
+            return parent;
+          }
+          el = parent;
         }
 
         return null;
-    }
+      }
 
-    var defaultData = [
+      var defaultData = [
       {
         id: 1,
         title: "Should European football boycott the next World Cup?",
-        published: "false",
+        published: false,
         videos: [
-          {
-            src: "https://www.dropbox.com/s/wgwqp3283hxquae/arjun.mp4?raw=1",
-            poster: "",
-            username: "Arjun Gadhia",
-            timestamp: "just now",
-            inGroup1: true,
-            inGroup2: false
-          },
-          {
-            src: "https://www.dropbox.com/s/wgwqp3283hxquae/luke.mp4?raw=1",
-            poster: "",
-            username: "Luke Kavanagh",
-            timestamp: "5 hours ago",
-            inGroup1: true,
-            inGroup2: false
-          },
-          {
-            src: "https://www.dropbox.com/s/wgwqp3283hxquae/emily.mp4?raw=1",
-            poster: "",
-            username: "Emily Cadman",
-            timestamp: "5 hours ago",
-            inGroup1: true,
-            inGroup2: false
-          },
-          {
-            src: "https://www.dropbox.com/s/wgwqp3283hxquae/paul.mp4?raw=1",
-            poster: "",
-            username: "Paul O'Neill",
-            timestamp: "5 hours ago",
-            inGroup1: true,
-            inGroup2: false
-          }
+        {
+          src: "https://www.dropbox.com/s/wgwqp3283hxquae/arjun.mp4?raw=1",
+          poster: "",
+          username: "Arjun Gadhia",
+          timestamp: "just now",
+          selected: false,
+          group: 0
+        },
+        {
+          src: "https://www.dropbox.com/s/wgwqp3283hxquae/luke.mp4?raw=1",
+          poster: "",
+          username: "Luke Kavanagh",
+          timestamp: "5 hours ago",
+          selected: true,
+          group: 0
+        },
+        {
+          src: "https://www.dropbox.com/s/wgwqp3283hxquae/emily.mp4?raw=1",
+          poster: "",
+          username: "Emily Cadman",
+          timestamp: "5 hours ago",
+          selected: true,
+          group: 1
+        },
+        {
+          src: "https://www.dropbox.com/s/wgwqp3283hxquae/paul.mp4?raw=1",
+          poster: "",
+          username: "Paul O'Neill",
+          timestamp: "5 hours ago",
+          selected: false,
+          group: 1
+        }
         ]
       },
       {
         id: 2,
         title: "#something",
-        published: "false",
+        published: false,
         videos: []
       }
-    ];
+      ];
 
 
       var data = localStorage.getItem('voxpop.data');
@@ -230,7 +230,7 @@
         published = JSON.parse(published);
       } else {
         published = {};
-        localStorage.setItem('voxpop.published', JSON.stringify(data));
+        localStorage.setItem('voxpop.published', JSON.stringify(published));
       }
 
       function newTab(data) {
@@ -242,175 +242,198 @@
 
       var sectionTemplate = function(data) {
         return `<div class="header">
-          <h2>${data.title}</h2>
-          <button class="publish">` + (data.published ? `Unpublish` : `Publish`) + `</button>
-          <div class="video-container">
+        <h2>${data.title}</h2>
+        <button class="publish">` + (data.published ? `Unpublish` : `Publish`) + `</button>
+        <div class="video-container">
 
-          </div>
-        </div>`
+        </div>
+      </div>`
+    }
+
+    var videoTemplate = function(video) {
+
+      return `
+      <div class="video"` + ((video.selected) ? ` data-bucket ` : ``) + `>
+        <video src="${video.src}" controls poster="${video.poster}"></video>
+        <span class="username">${video.username}</span>
+        Published: <time class="timestamp">${video.timestamp}</time>
+        <div class="button-group">
+          Selected: <input class="selected" type="checkbox" ` + (video.selected ? `checked` : ``) + `/>
+          <br/>Group:
+          <button name="button" value="0"` + (video.group === 0 ? ` aria-pressed` : ``) + `>Yes</button>
+          <button name="button" value="1"` + (video.group === 1 ? ` aria-pressed` : ``) + `>No</button>
+        </div>
+      </div>`
+    }
+
+    function newPanel(data) {
+      var panel = document.createElement('section');
+      panel.classList.add('panel');
+      panel.setAttribute('data-panel-id', data.id);
+      panel.innerHTML = sectionTemplate(data);
+      return panel;
+    }
+
+    function createNewQuestion(panelData) {
+
+      var createTab = document.querySelector('[data-panel="create"]');
+      var createPanel = document.querySelector('[data-panel-id="create"]');
+
+      if(document.querySelector('[data-panel-id="' + panelData.id + '"]')) {
+        return;
       }
+      createTab.parentElement.insertBefore(newTab(panelData), createTab);
+      createPanel.parentElement.insertBefore(newPanel(panelData), createPanel);
+      var videoContainer = document.querySelector('[data-panel-id="' + panelData.id + '"] .video-container');
+      panelData.videos.forEach(function(videoData) {
+        videoContainer.insertAdjacentHTML('beforeend', videoTemplate(videoData));
 
-      var videoTemplate = function(video) {
-
-        return `
-          <div class="video"` + ((video.inGroup1 || video.inGroup2) ? ` data-bucket ` : ``) + `>
-            <video src="${video.src}" controls poster="${video.poster}"></video>
-            <span class="username">${video.username}</span>
-            Published: <time class="timestamp">${video.timestamp}</time>
-            <div class="button-group">Group:
-              <button name="button" value="1"` + (video.inGroup1 ? ` aria-pressed` : ``) + `>yes</button>
-              <button name="button" value="2"` + (video.inGroup2 ? ` aria-pressed` : ``) + `>no</button>
-            </div>
-          </div>`
-      }
-
-      function newPanel(data) {
-        var panel = document.createElement('section');
-        panel.classList.add('panel');
-        panel.setAttribute('data-panel-id', data.id);
-        panel.innerHTML = sectionTemplate(data);
-        return panel;
-      }
-
-      function createNewQuestion(panelData) {
-
-        var createTab = document.querySelector('[data-panel="create"]');
-        var createPanel = document.querySelector('[data-panel-id="create"]');
-
-        if(document.querySelector('[data-panel-id="' + panelData.id + '"]')) {
-            return;
-          }
-          createTab.parentElement.insertBefore(newTab(panelData), createTab);
-          createPanel.parentElement.insertBefore(newPanel(panelData), createPanel);
-          var videoContainer = document.querySelector('[data-panel-id="' + panelData.id + '"] .video-container');
-          panelData.videos.forEach(function(videoData) {
-            videoContainer.insertAdjacentHTML('beforeend', videoTemplate(videoData));
-
-          });
-      }
-      function createAll() {
-        data.forEach(createNewQuestion);
-        document.querySelector('[data-panel]').setAttribute('aria-pressed', '');
-        document.querySelector('[data-panel-id]').classList.add('active');
-      }
-
-      function saveData() {
-        localStorage.setItem('voxpop.data', JSON.stringify(data));
-      };
-      function savePublished() {
-        localStorage.setItem('voxpop.published', JSON.stringify(published));
-      };
-      createAll();
-
-      Array.prototype.slice.call(document.querySelectorAll('.button-group>button')).map(function(btn) {
-        btn.addEventListener('click', function () {
-          var alreadyPressed = this.parentElement.querySelector('.button-group button[aria-pressed]');
-
-          if(this.hasAttribute('aria-pressed')) {
-            this.parentElement.parentElement.removeAttribute('data-bucket');
-            this.removeAttribute('aria-pressed');
-          } else {
-            this.parentElement.parentElement.setAttribute('data-bucket', this.value);
-            if(alreadyPressed) { alreadyPressed.removeAttribute('aria-pressed') };
-            this.setAttribute('aria-pressed', '');
-          }
-
-
-          var allVideos =Array.prototype.slice.call( document.querySelector('.video-container').children );
-
-          var allTabs =Array.prototype.slice.call( document.querySelector('.tabs').children );
-
-          var index = allVideos.indexOf(closest(this, '.video'));
-          var currentTabIndex = allTabs.indexOf(allTabs.filter(function(tab) {
-            return tab.hasAttribute('aria-pressed');
-          })[0]);
-
-          data[currentTabIndex].videos[index].inGroup1 = this.parentElement.querySelector('[value="1"]').hasAttribute('aria-pressed');
-          data[currentTabIndex].videos[index].inGroup2 = this.parentElement.querySelector('[value="2"]').hasAttribute('aria-pressed');
-
-          saveData();
-        });
       });
+    }
+    function createAll() {
+      data.forEach(createNewQuestion);
+      document.querySelector('[data-panel]').setAttribute('aria-pressed', '');
+      document.querySelector('[data-panel-id]').classList.add('active');
+    }
 
-        document.querySelector('.tabs').addEventListener('click', function (e) {
-          if(e.target.tagName !== 'BUTTON') {
-            return;
-          }
-          var alreadyPressed = e.target.parentElement.querySelector('[aria-pressed]');
-          var activePanel = document.querySelector('.panel.active');
+    function saveData() {
+      localStorage.setItem('voxpop.data', JSON.stringify(data));
+    };
+    function savePublished() {
+      localStorage.setItem('voxpop.published', JSON.stringify(published));
+    };
+    createAll();
 
-          if(e.target !== alreadyPressed) {
-            alreadyPressed.removeAttribute('aria-pressed');
-            activePanel.classList.remove('active');
-            e.target.setAttribute('aria-pressed', '');
-            document.querySelector('[data-panel-id="' + e.target.getAttribute('data-panel') + '"]').classList.add('active');
-          }
-        });
+    Array.prototype.slice.call(document.querySelectorAll('.button-group>button')).map(function(btn) {
+      btn.addEventListener('click', function () {
+        var alreadyPressed = this.parentElement.querySelector('.button-group button[aria-pressed]');
 
-      document.querySelector('#create-form').addEventListener('submit', function(e) {
-        e.preventDefault();
-
-        var createTab = document.querySelector('[data-panel="create"]');
-        var createPanel = document.querySelector('[data-panel-id="create"]');
-        var lastTab = createTab.previousElementSibling;
-        var newTabId =  parseInt(lastTab.getAttribute('data-panel')) + 1;
-        var newPanel = {
-          id: newTabId,
-          title: document.forms[0].title.value,
-          published: false,
-          videos: []
-        };
-
-        data.push(newPanel);
-        saveData();
-        createNewQuestion(newPanel);
-
-        var newPanel = document.querySelector('[data-panel-id="' + newTabId + '"]');
-        var newTab = document.querySelector('[data-panel="' + newTabId + '"]');
-
-        newPanel.classList.add('active');
-        createPanel.classList.remove('active');
-        newTab.setAttribute('aria-pressed', '');
-        createTab.removeAttribute('aria-pressed')
-      });
-
-      document.addEventListener('click', function(e) {
-        if(e.target.className !== 'publish') {
-          return;
+        if(this.hasAttribute('aria-pressed')) {
+          this.removeAttribute('aria-pressed');
+        } else {
+          this.parentElement.parentElement.setAttribute('data-bucket', this.value);
+          if(alreadyPressed) { alreadyPressed.removeAttribute('aria-pressed') };
+          this.setAttribute('aria-pressed', '');
         }
-        e.preventDefault();
+
+
+        var allVideos =Array.prototype.slice.call( document.querySelector('.video-container').children );
 
         var allTabs =Array.prototype.slice.call( document.querySelector('.tabs').children );
 
+        var index = allVideos.indexOf(closest(this, '.video'));
         var currentTabIndex = allTabs.indexOf(allTabs.filter(function(tab) {
           return tab.hasAttribute('aria-pressed');
         })[0]);
 
-        if(data[currentTabIndex].published) {
-          data[currentTabIndex].published = false;
-          e.target.textContent = "Publish";
-          delete published[data[currentTabIndex].key];
+        data[currentTabIndex].videos[index].group = this.parentElement.querySelector('button[aria-pressed]') ? parseInt(this.parentElement.querySelector('button[aria-pressed]').value) : null;
+
+        saveData();
+      });
+});
+
+Array.prototype.slice.call(document.querySelectorAll('.button-group .selected')).map(function(checkbox) {
+      checkbox.addEventListener('change', function () {
+
+        var allVideos =Array.prototype.slice.call( document.querySelector('.video-container').children );
+
+        var allTabs =Array.prototype.slice.call( document.querySelector('.tabs').children );
+
+        var index = allVideos.indexOf(closest(this, '.video'));
+        var currentTabIndex = allTabs.indexOf(allTabs.filter(function(tab) {
+          return tab.hasAttribute('aria-pressed');
+        })[0]);
+
+        data[currentTabIndex].videos[index].selected = this.checked;
+        if(this.checked) {
+          this.parentElement.parentElement.setAttribute('data-bucket' ,'');
         } else {
-          e.target.textContent = "Unpublish";
-          data[currentTabIndex].published = true;
-          var grouped = {
-            group1: [],
-            group2: []
-          };
-          data[currentTabIndex].videos.forEach(function(video) {
-            if(video.inGroup1) {
-              grouped.group1.push(video);
-            } else if(video.inGroup2) {
-              grouped.group2.push(video);
-            }
-          });
-          published[data[currentTabIndex].key] = grouped;
+          this.parentElement.parentElement.removeAttribute('data-bucket');
         }
         saveData();
-        savePublished();
-
       });
+});
 
-    </script>
-  </body>
+document.querySelector('.tabs').addEventListener('click', function (e) {
+  if(e.target.tagName !== 'BUTTON') {
+    return;
+  }
+  var alreadyPressed = e.target.parentElement.querySelector('[aria-pressed]');
+  var activePanel = document.querySelector('.panel.active');
+
+  if(e.target !== alreadyPressed) {
+    alreadyPressed.removeAttribute('aria-pressed');
+    activePanel.classList.remove('active');
+    e.target.setAttribute('aria-pressed', '');
+    document.querySelector('[data-panel-id="' + e.target.getAttribute('data-panel') + '"]').classList.add('active');
+  }
+});
+
+document.querySelector('#create-form').addEventListener('submit', function(e) {
+  e.preventDefault();
+
+  var createTab = document.querySelector('[data-panel="create"]');
+  var createPanel = document.querySelector('[data-panel-id="create"]');
+  var lastTab = createTab.previousElementSibling;
+  var newTabId =  parseInt(lastTab.getAttribute('data-panel')) + 1;
+  var newPanel = {
+    id: newTabId,
+    title: document.forms[0].title.value,
+    published: false,
+    videos: []
+  };
+
+  data.push(newPanel);
+  saveData();
+  createNewQuestion(newPanel);
+
+  var newPanel = document.querySelector('[data-panel-id="' + newTabId + '"]');
+  var newTab = document.querySelector('[data-panel="' + newTabId + '"]');
+
+  newPanel.classList.add('active');
+  createPanel.classList.remove('active');
+  newTab.setAttribute('aria-pressed', '');
+  createTab.removeAttribute('aria-pressed')
+});
+
+document.addEventListener('click', function(e) {
+  if(e.target.className !== 'publish') {
+    return;
+  }
+  e.preventDefault();
+
+  var allTabs =Array.prototype.slice.call( document.querySelector('.tabs').children );
+
+  var currentTabIndex = allTabs.indexOf(allTabs.filter(function(tab) {
+    return tab.hasAttribute('aria-pressed');
+  })[0]);
+
+  if(data[currentTabIndex].published) {
+    data[currentTabIndex].published = false;
+    e.target.textContent = "Publish";
+    delete published[data[currentTabIndex].key];
+  } else {
+    e.target.textContent = "Unpublish";
+    data[currentTabIndex].published = true;
+    var grouped = {};
+    data[currentTabIndex].videos.forEach(function(video) {
+      if(!video.selected) {
+        return;
+      }
+      grouped[video.group] = grouped[video.group] || [];
+      grouped[video.group].push(video);
+    });
+    published[data[currentTabIndex].id] = {
+      id: data[currentTabIndex].id,
+      title: data[currentTabIndex].title,
+      groupedVideos: grouped
+    };
+  }
+  saveData();
+  savePublished();
+
+});
+
+</script>
+</body>
 </html>
