@@ -1,6 +1,88 @@
 <html>
   <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+     <!--
+    Greens
+    -----------
+    green #3CCF00
+    drak green #006837
 
+    blocks
+    ---------
+    d grey #333333
+    mid grey #505050
+    light grey #EFEFEF
+
+
+    text
+    ---------
+    mid #636363
+    dark #424242
+    light #ffffff
+
+
+
+    - video capture/camera page
+    - next/FT article -> video capture
+    - Twitter link -> video capture
+  -->
+
+    <style>
+      body {
+        font-family: Helvetica, Arial, sans-serif;
+      }
+
+      .video {
+        width: 31%;
+        float: left;
+        margin: 1%;
+        border: 1px solid #333333;
+        box-sizing: border-box;
+        position: relative;
+        padding: 10px;
+        font-size: 12px;
+        font-weight: bold;
+      }
+
+      .video[data-bucket]:after {
+        content: '✓';
+        font-size: 32px;
+        position: absolute;
+        top: 10px;
+        right: 20px;
+        color: #3CCF00;
+      }
+
+      .username {
+        position: absolute;
+        background: rgba(0,0,0,0.8);
+        top: 0; left: 0;
+        color: #fff;
+        font-size: 12px;
+        padding: 2px;
+      }
+      .timestamp {
+        font-size: 10px;
+        text-transform: uppercase;
+        font-weight: normal;
+      }
+
+      .video video {
+        width: 100%;
+        margin-bottom: 10px;
+      }
+
+      button {
+        background:#EFEFEF;
+        border: #505050;
+        padding: 4px;
+      }
+      button[aria-pressed] {
+        background: #006837;
+        color: #fff;
+      }
+
+    </style>
   </head>
   <body>
 
@@ -8,13 +90,65 @@
     <h2>Should the European football boycott the World cup?</h2>
     should countries the Quatri worlds cup over corruption allegations.
 
-    <video src="videofile.ogg" autoplay poster="posterimage.jpg">
+    <div class="video-container">
+      <div class="video">
+        <video src="http://video.webmfiles.org/big-buck-bunny_trailer.webm" controls poster="http://www.webmfiles.org/wp-content/uploads/2010/05/webm-file.jpg"></video>
+        <span class="username">Arjun Gadhia</span>
+        Published: <time class="timestamp">Just now</time>
+        <div class="button-group">Group:
+          <button name="button" value="yes">yes</button>
+          <button name="button" value="no">no</button>
+        </div>
+      </div>
 
-    </video>
-    person name
-    hashtag
-    when recorded
-    <button name="button">yes</button>
-    <button name="button">no</button>
+      <div class="video">
+        <video src="http://video.webmfiles.org/big-buck-bunny_trailer.webm" controls poster="http://www.webmfiles.org/wp-content/uploads/2010/05/webm-file.jpg"></video>
+        <span class="username">Arjun Gadhia</span>
+        Published: <time class="timestamp">Just now</time>
+        <div class="button-group">Group:
+          <button name="button" value="yes">yes</button>
+          <button name="button" value="no">no</button>
+        </div>
+      </div>
+
+      <div class="video">
+        <video src="http://video.webmfiles.org/big-buck-bunny_trailer.webm" controls poster="http://www.webmfiles.org/wp-content/uploads/2010/05/webm-file.jpg"></video>
+        <span class="username">Arjun Gadhia</span>
+        Published: <time class="timestamp">Just now</time>
+        <div class="button-group">Group:
+          <button name="button" value="yes">yes</button>
+          <button name="button" value="no">no</button>
+        </div>
+      </div>
+
+      <div class="video">
+        <video src="http://video.webmfiles.org/big-buck-bunny_trailer.webm" controls poster="http://www.webmfiles.org/wp-content/uploads/2010/05/webm-file.jpg"></video>
+        <span class="username">Arjun Gadhia</span>
+        Published: <time class="timestamp">Just now</time>
+
+        <div class="button-group">Group:
+          <button name="button" value="yes">yes</button>
+          <button name="button" value="no">no</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      Array.prototype.slice.call(document.querySelectorAll('button')).map(function(btn) {
+        btn.addEventListener('click', function () {
+          var alreadyPressed = this.parentElement.querySelector('button[aria-pressed');
+
+          if(this.hasAttribute('aria-pressed')) {
+            this.parentElement.parentElement.removeAttribute('data-bucket');
+            this.removeAttribute('aria-pressed');
+          } else {
+            this.parentElement.parentElement.setAttribute('data-bucket', this.value);
+            if(alreadyPressed) { alreadyPressed.removeAttribute('aria-pressed') };
+            this.setAttribute('aria-pressed', '');
+          }
+        });
+      });
+
+    </script>
   </body>
 </html>
