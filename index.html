@@ -168,37 +168,53 @@
         return null;
     }
 
-      var defaultData = [
-        {
-          id: 1,
-          title: "Title 1",
-          published: "false",
-          videos: [
-            {
-              src: "http://video.webmfiles.org/big-buck-bunny_trailer.webm",
-              poster: "http://www.webmfiles.org/wp-content/uploads/2010/05/webm-file.jpg",
-              username: "Arjun Gadhia",
-              timestamp: "just now",
-              inGroup1: true,
-              inGroup2: false
-            },
-            {
-              src: "http://video.webmfiles.org/big-buck-bunny_trailer.webm",
-              poster: "http://www.webmfiles.org/wp-content/uploads/2010/05/webm-file.jpg",
-              username: "Other User",
-              timestamp: "5 hours ago",
-              inGroup1: true,
-              inGroup2: false
-            }
-          ]
-        },
-        {
-          id: 2,
-          title: "Title 2",
-          published: "false",
-          videos: []
-        }
-      ];
+    var defaultData = [
+      {
+        id: 1,
+        title: "Should European football boycott the next World Cup?",
+        published: "false",
+        videos: [
+          {
+            src: "https://www.dropbox.com/s/wgwqp3283hxquae/arjun.mp4?raw=1",
+            poster: "",
+            username: "Arjun Gadhia",
+            timestamp: "just now",
+            inGroup1: true,
+            inGroup2: false
+          },
+          {
+            src: "https://www.dropbox.com/s/wgwqp3283hxquae/luke.mp4?raw=1",
+            poster: "",
+            username: "Luke Kavanagh",
+            timestamp: "5 hours ago",
+            inGroup1: true,
+            inGroup2: false
+          },
+          {
+            src: "https://www.dropbox.com/s/wgwqp3283hxquae/emily.mp4?raw=1",
+            poster: "",
+            username: "Emily Cadman",
+            timestamp: "5 hours ago",
+            inGroup1: true,
+            inGroup2: false
+          },
+          {
+            src: "https://www.dropbox.com/s/wgwqp3283hxquae/paul.mp4?raw=1",
+            poster: "",
+            username: "Paul O'Neill",
+            timestamp: "5 hours ago",
+            inGroup1: true,
+            inGroup2: false
+          }
+        ]
+      },
+      {
+        id: 2,
+        title: "#something",
+        published: "false",
+        videos: []
+      }
+    ];
 
       var data = localStorage.getItem('voxpop.questions');
       if(data) {
@@ -333,6 +349,7 @@
           published: false,
           videos: []
         };
+
         data.push(newPanel);
         localStorage.setItem('voxpop.questions', JSON.stringify(data));
         createNewQuestion(newPanel);
