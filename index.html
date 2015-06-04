@@ -182,6 +182,11 @@
 
     }
 
+    .message {
+      margin: 10px 0;
+      font-size: 14px;
+    }
+
   </style>
 </head>
 <body>
@@ -330,6 +335,7 @@
           <h2>${data.title}</h2>
           <div class="tags"><span class="label">Tags: </span>` + data.tags.join(', ') + `</div>
           <button class="publish">Publish</button>
+          <div class="message"></div>
           <a href="article.html#voxpopper" class="show-article">Show in article</a>
           </div>
         <div class="video-container">
@@ -519,8 +525,12 @@ document.addEventListener('click', function(e) {
       tags: data[currentTabIndex].tags,
       groupedVideos: grouped
     };
+
+  document.querySelector('.message').textContent = new Date() + ' - published changes!';
   saveData();
   savePublished();
+
+
 
 });
 
