@@ -483,7 +483,10 @@ document.querySelector('#create-form').addEventListener('submit', function(e) {
   newPanel.classList.add('active');
   createPanel.classList.remove('active');
   newTab.setAttribute('aria-pressed', '');
-  createTab.removeAttribute('aria-pressed')
+  createTab.removeAttribute('aria-pressed');
+
+  populateWithVideos();
+
 });
 
 document.addEventListener('click', function(e) {
@@ -527,6 +530,57 @@ document.addEventListener('click', function(e) {
   savePublished();
 
 });
+
+function addInstagramVideosCallback(response)
+{
+  var allTabs =Array.prototype.slice.call( document.querySelector('.tabs').children );
+
+  var currentTabIndex = allTabs.indexOf(allTabs.filter(function(tab) {
+    return tab.hasAttribute('aria-pressed');
+  })[0]);
+  var newVideo;
+  var activeVideoList = document.querySelector('.panel.active .video-container');
+
+  response.data.forEach(function (media) {
+    if(media.videos) {
+      newVideo = {
+          src: media.videos['standard_resolution'].url,
+          poster: media.images['standard_resolution'].url,
+          username: media.user.username,
+          timestamp: media['created_time'],
+          selected: false,
+          group: 1
+      }
+      if(!data[currentTabIndex].videos.some(function(video) {
+        return video.src === newVideo.src;
+      })) {
+        data[currentTabIndex].videos.push(newVideo);
+        activeVideoList.insertAdjacentHTML('beforeend', videoTemplate(newVideo));
+      }
+
+    }
+  });
+
+
+}
+
+function addInstagramVideos(tag) {
+  var script = document.createElement('script');
+  script.src = 'https://api.instagram.com/v1/tags/' + tag.replace('#', '') + '/media/recent?client_id=7d052d10ce3a4d0fb92aa5fa604743f2&count=1000&callback=addInstagramVideosCallback'
+  document.getElementsByTagName('head')[0].appendChild(script);
+}
+
+function populateWithVideos() {
+ var allTabs =Array.prototype.slice.call( document.querySelector('.tabs').children );
+
+  var currentTabIndex = allTabs.indexOf(allTabs.filter(function(tab) {
+    return tab.hasAttribute('aria-pressed');
+  })[0]);
+
+  data[currentTabIndex].tags.forEach(addInstagramVideos);
+}
+
+populateWithVideos();
 
 </script>
 </body>
