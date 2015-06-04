@@ -592,26 +592,29 @@
 				<button id="play-all" class="voxpop-button voxpop-playall">Play all</button>
 				<h3 class="voxpop-header">Should European football boycott the next World Cup?</h3>
 			</div>
-			<div class="voxpop-answers">
-				<div id="answer-yes" class="voxpop-answer voxpop-answer--light">
-					<div class="voxpop-answer__name">
-						<h3>Yes</h3>
+			<div style="position:relative;">
+				<div class="voxpop-answers">
+					<div id="answer-yes" class="voxpop-answer voxpop-answer--light">
+						<div class="voxpop-answer__name">
+							<h3>Yes</h3>
+						</div>
+					</div>
+					<div id="answer-no" class="voxpop-answer voxpop-answer--dark">
+						<div class="voxpop-answer__name">
+							<h3>No</h3>
+						</div>
 					</div>
 				</div>
-				<div id="answer-no" class="voxpop-answer voxpop-answer--dark">
-					<div class="voxpop-answer__name">
-						<h3>No</h3>
-					</div>
+				<div id="all-player-container">
+					<video id="all-player" autoplay style="width:40%;height:auto;" controls>
+					</video>
 				</div>
 			</div>
 			<div class="voxpop-branding">
 				<button class="voxpop-button voxpop-sendurvideo">Send your video</button>
 			</div>
+			</div>
 		</div>
-
-		<video id="all-player" autoplay style="width:100%;height:auto;">
-
-		</video>
 <script>
 
 
@@ -687,16 +690,24 @@ var voxpop_views = {
 		}
 
 		var first_video = videos.shift();
-
+		var container = document.getElementById('all-player-container');
 		var player = document.getElementById('all-player');
 
-		console.log('playing first', first_video.src);
+		function play_video(vid) {
+			if (vid) {
+				container.style.display = 'block';
+				console.log('playing video', vid.src);
+				player.src = vid.src;
+			} else {
+				container.style.display = 'none';
+			}
+		}
 
-		player.src = first_video.src;
+		play_video(first_video);
+
 		player.onended = function(){
 			var next_video = videos.shift();
-			console.log('playing next', next_video.src);
-			player.src = next_video.src;
+			play_video(next_video);
 		}
 
 	};
@@ -717,6 +728,17 @@ var voxpop_views = {
 		<br><br><br><br>
 
 		<style>
+
+		#all-player-container{
+			display:none;
+			position: absolute;
+			top: 0;
+			width: 100%;
+			bottom: 0;
+			background-color: black;
+			padding: 20px;
+			z-index: 2;
+		}
 
 			.voxpop, .voxpop *{box-sizing: border-box;font-family: Helvetica, sans-serif;}
 
