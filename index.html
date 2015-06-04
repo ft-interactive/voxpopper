@@ -271,41 +271,8 @@
         id: 1,
         title: "Should European football boycott the next World Cup?",
         published: false,
-        tags: ['#FifaCrisis', '#BlatterOut'],
-        videos: [
-        {
-          src: "https://www.dropbox.com/s/wgwqp3283hxquae/arjun.mp4?raw=1",
-          poster: "",
-          username: "Arjun Gadhia",
-          timestamp: "just now",
-          selected: false,
-          group: 0
-        },
-        {
-          src: "https://www.dropbox.com/s/wgwqp3283hxquae/luke.mp4?raw=1",
-          poster: "",
-          username: "Luke Kavanagh",
-          timestamp: "5 hours ago",
-          selected: true,
-          group: 0
-        },
-        {
-          src: "https://www.dropbox.com/s/wgwqp3283hxquae/emily.mp4?raw=1",
-          poster: "",
-          username: "Emily Cadman",
-          timestamp: "5 hours ago",
-          selected: true,
-          group: 1
-        },
-        {
-          src: "https://www.dropbox.com/s/wgwqp3283hxquae/paul.mp4?raw=1",
-          poster: "",
-          username: "Paul O'Neill",
-          timestamp: "5 hours ago",
-          selected: false,
-          group: 1
-        }
-        ]
+        tags: ['#FifaVox', '#FifaCrisis', '#BlatterOut'],
+        videos: []
       },
       {
         id: 2,
@@ -409,33 +376,33 @@
     };
     createAll();
 
-    Array.prototype.slice.call(document.querySelectorAll('.button-group>button')).map(function(btn) {
-      btn.addEventListener('click', function () {
-        var alreadyPressed = this.parentElement.querySelector('.button-group button[aria-pressed]');
+    document.addEventListener('click', function (e) {
+      if(!(e.target.tagName == 'BUTTON' && e.target.parentElement.className === 'button-group')) {
+        return;
+      }
+      var alreadyPressed = e.target.parentElement.querySelector('.button-group button[aria-pressed]');
 
-        if(this.hasAttribute('aria-pressed')) {
-          this.removeAttribute('aria-pressed');
-        } else {
-          this.parentElement.parentElement.setAttribute('data-bucket', this.value);
-          if(alreadyPressed) { alreadyPressed.removeAttribute('aria-pressed') };
-          this.setAttribute('aria-pressed', '');
-        }
+      if(e.target.hasAttribute('aria-pressed')) {
+        e.target.removeAttribute('aria-pressed');
+      } else {
+        if(alreadyPressed) { alreadyPressed.removeAttribute('aria-pressed') };
+        e.target.setAttribute('aria-pressed', '');
+      }
 
 
-        var allVideos =Array.prototype.slice.call( document.querySelector('.video-container').children );
+      var allVideos =Array.prototype.slice.call( document.querySelector('.video-container').children );
 
-        var allTabs =Array.prototype.slice.call( document.querySelector('.tabs').children );
+      var allTabs =Array.prototype.slice.call( document.querySelector('.tabs').children );
 
-        var index = allVideos.indexOf(closest(this, '.video'));
-        var currentTabIndex = allTabs.indexOf(allTabs.filter(function(tab) {
-          return tab.hasAttribute('aria-pressed');
-        })[0]);
+      var index = allVideos.indexOf(closest(e.target, '.video'));
+      var currentTabIndex = allTabs.indexOf(allTabs.filter(function(tab) {
+        return tab.hasAttribute('aria-pressed');
+      })[0]);
 
-        data[currentTabIndex].videos[index].group = this.parentElement.querySelector('button[aria-pressed]') ? parseInt(this.parentElement.querySelector('button[aria-pressed]').value) : null;
+      data[currentTabIndex].videos[index].group = e.target.parentElement.querySelector('button[aria-pressed]') ? parseInt(e.target.parentElement.querySelector('button[aria-pressed]').value) : null;
 
-        saveData();
-      });
-});
+      saveData();
+    });
 
 document.addEventListener('change', function (e) {
 
