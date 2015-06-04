@@ -589,6 +589,7 @@
 		</div>
 		<div class="voxpop voxpop--showcase" id="voxpopper">
 			<div class="voxpop-question">
+				<button id="play-all" class="voxpop-button voxpop-playall">Play all</button>
 				<h3 class="voxpop-header">Should European football boycott the next World Cup?</h3>
 			</div>
 			<div class="voxpop-answers">
@@ -603,6 +604,9 @@
 					</div>
 				</div>
 			</div>
+			<div class="voxpop-branding">
+				<button class="voxpop-button voxpop-sendurvideo">Send your video</button>
+			</div>
 		</div>
 <script>
 
@@ -612,7 +616,8 @@ var voxpop_templates = {
 		return `<div class="voxpop-answer__video">
 			<div class="voxpop-media">
 				<video src="${answer.src}" controls poster="${answer.poster}"></video>
-			</div></div>`;
+			</div>
+		</div>`;
 	},
 	answers: function (answers) {
 		return answers.map(voxpop_templates.answer).join('');
@@ -627,7 +632,7 @@ var voxpop_views = {
 	}
 };
 
-(function(){
+(function() {
 		var data = JSON.parse(localStorage.getItem('voxpop.published') || '');
 		var question = data[1];
 
@@ -650,17 +655,18 @@ var voxpop_views = {
 
 }());
 </script>
-		<div class="voxpop">
+		<div class="voxpop voxpop--advert">
 			<div class="voxpop-question">
-			<h3 class="voxpop-header">Should European football boycott the next World Cup?</h3>
-			<p class="voxpop-subhead">Send your views to the FT</p>
-			<a class="voxpop-button" href="capture.html">Record your views</a>
+				<h3 class="voxpop-header">Should European football boycott the next World Cup?</h3>
+				<p class="voxpop-subhead">Send your views to the FT</p>
+				<a class="voxpop-button" href="capture.html">Record your views</a>
 			</div>
 			<div class="voxpop-branding">
-			<span class="voxpop-branding-text">Man in the street for the digital age</span>
-			<img class="voxpop-logo" src="voxpopper_logo.svg"/>
+				<button class="voxpop-button">Send your video</button>
 			</div>
 		</div>
+
+		<br><br><br><br>
 
 		<style>
 
@@ -670,15 +676,19 @@ var voxpop_views = {
 				clear: both;
 			}
 
-			.voxpop--showcase {
+			.voxpop--advert {
 				display: none;
+			}
+
+			.voxpop--showcase {
+				/* display: none; */
 			}
 
 			.voxpop--showcase .voxpop-header {
 				margin: 0;
 			}
 			.voxpop--showcase .voxpop-question {
-				padding: 22px 0;
+				padding: 22px;
 			}
 
 			.voxpop-answers {
@@ -705,8 +715,6 @@ var voxpop_views = {
 				background-color: #505050;
 			}
 
-
-
 			.voxpop-answer__name,
 			.voxpop-answer__video {
 				width: 50%;
@@ -723,9 +731,9 @@ var voxpop_views = {
 			}
 
 			.voxpop-question {
-				padding: 30px 0;
+				padding: 30px 30px;
 				width: 100%;
-				text-align: center;
+				text-align: left;
 				clear: both;
 				color: #fff;
 				box-sizing: border-box;
@@ -761,17 +769,26 @@ var voxpop_views = {
 				color:  #3CCF00;
 				border: 1px solid #333;
 				border-bottom-width: 3px;
-
 				border-radius: 4px;
 				text-align: center;
 				width: 80%;
 				font-size: 18px;
 				text-decoration: none;
-			  text-transform: uppercase;
-			  padding: 20px;
+			  padding: 14px 20px;
 			  margin: 0 auto;
 			  display: block;
 			  box-sizing: border-box;
+			}
+
+			.voxpop-sendurvideo {
+				max-width: 333px;
+			}
+
+			.voxpop-playall {
+				max-width: 122px;
+				font-size: 22px;
+				float: right;
+				margin-top: -10px;
 			}
 
 			.voxpop-button:hover {
@@ -782,11 +799,11 @@ var voxpop_views = {
 				position: relative;
 				z-index: 2;
 				text-align: right;
-				padding: 0;
+				padding: 20px;
+				background-color: #3CCF00;
 			}
 			.voxpop-branding:after {
 				position: absolute;
-				background-color: #636363;
 				content: '';
 				width: 100%;
 				height: 100%;
@@ -802,6 +819,7 @@ var voxpop_views = {
 			  padding: 10px;
 			  color: #fff;
 			}
+
 			.voxpop-logo {
 				width: 60px;
 			  position: absolute;
