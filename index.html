@@ -329,8 +329,7 @@
         return `<div class="title">
           <h2>${data.title}</h2>
           <div class="tags"><span class="label">Tags: </span>` + data.tags.join(', ') + `</div>
-          <button class="publish"` + (data.published ? ` aria-pressed>Unpublish` : `>Publish`) + `</button>
-
+          <button class="publish">Publish</button>
           </div>
         <div class="video-container">
 
@@ -501,15 +500,8 @@ document.addEventListener('click', function(e) {
     return tab.hasAttribute('aria-pressed');
   })[0]);
 
-  if(data[currentTabIndex].published) {
-    data[currentTabIndex].published = false;
-    e.target.textContent = "Publish";
-    e.target.removeAttribute('aria-pressed');
-    delete published[data[currentTabIndex].key];
-  } else {
-    e.target.textContent = "Unpublish";
+
     data[currentTabIndex].published = true;
-    e.target.setAttribute('aria-pressed', '');
 
     var grouped = {};
     data[currentTabIndex].videos.forEach(function(video) {
@@ -519,13 +511,13 @@ document.addEventListener('click', function(e) {
       grouped[video.group] = grouped[video.group] || [];
       grouped[video.group].push(video);
     });
+
     published[data[currentTabIndex].id] = {
       id: data[currentTabIndex].id,
       title: data[currentTabIndex].title,
       tags: data[currentTabIndex].tags,
       groupedVideos: grouped
     };
-  }
   saveData();
   savePublished();
 
