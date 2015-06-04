@@ -61,6 +61,16 @@
       font-weight: bold;
     }
 
+    .video[data-source="instagram"]:before {
+      background: url('data:image/png;base64,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');
+      position: absolute;
+      top: 0; right: 0;
+      height: 20px;
+      width: 20px;
+      background-size: cover;
+      content: '';
+    }
+
     .video[data-bucket]:after {
       content: '✓';
       font-size: 32px;
@@ -346,7 +356,7 @@
     var videoTemplate = function(video) {
 
       return `
-      <div class="video"` + ((video.selected) ? ` data-bucket ` : ``) + `>
+      <div class="video"` + ((video.selected) ? ` data-bucket ` : ``) + ` data-source=${video.source}>
         <div class="video-cover">
         <video src="${video.src}" controls poster="${video.poster}"></video>
         </div>
@@ -551,6 +561,7 @@ function addInstagramVideosCallback(response)
           poster: media.images['standard_resolution'].url,
           username: media.user.username,
           timestamp: media['created_time'],
+          source: 'instagram',
           selected: false,
           group: 1
       }
