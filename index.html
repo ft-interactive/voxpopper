@@ -528,7 +528,7 @@ function addInstagramVideosCallback(response)
           src: media.videos['standard_resolution'].url,
           poster: media.images['standard_resolution'].url,
           username: media.user.username,
-          timestamp: media['created_time'],
+          timestamp: new Date(parseInt(media['created_time'] + '000')),
           source: 'instagram',
           selected: false,
           group: 1
