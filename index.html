@@ -166,6 +166,22 @@
       font-weight: bold;
     }
 
+    .publish {
+      float: right;
+      font-size: 20px;
+      padding: 10px;
+      background: #3CCF00;
+      color: #fff;
+    }
+    .publish[aria-pressed] {
+      background: #505050;
+    }
+
+    .video-container {
+      clear: both;
+
+    }
+
   </style>
 </head>
 <body>
@@ -313,7 +329,7 @@
         return `<div class="title">
           <h2>${data.title}</h2>
           <div class="tags"><span class="label">Tags: </span>` + data.tags.join(', ') + `</div>
-          <button class="publish">` + (data.published ? `Unpublish` : `Publish`) + `</button>
+          <button class="publish"` + (data.published ? ` aria-pressed>Unpublish` : `>Publish`) + `</button>
 
           </div>
         <div class="video-container">
@@ -325,7 +341,9 @@
 
       return `
       <div class="video"` + ((video.selected) ? ` data-bucket ` : ``) + `>
+        <div class="video-cover">
         <video src="${video.src}" controls poster="${video.poster}"></video>
+        </div>
         <span class="username">${video.username}</span>
         Published: <time class="timestamp">${video.timestamp}</time>
         <div class="button-group">
@@ -483,10 +501,13 @@ document.addEventListener('click', function(e) {
   if(data[currentTabIndex].published) {
     data[currentTabIndex].published = false;
     e.target.textContent = "Publish";
+    e.target.removeAttribute('aria-pressed');
     delete published[data[currentTabIndex].key];
   } else {
     e.target.textContent = "Unpublish";
     data[currentTabIndex].published = true;
+    e.target.setAttribute('aria-pressed', '');
+
     var grouped = {};
     data[currentTabIndex].videos.forEach(function(video) {
       if(!video.selected) {
