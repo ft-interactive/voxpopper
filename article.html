@@ -608,6 +608,10 @@
 				<button class="voxpop-button voxpop-sendurvideo">Send your video</button>
 			</div>
 		</div>
+
+		<video id="all-player" autoplay style="width:100%;height:auto;">
+
+		</video>
 <script>
 
 
@@ -632,6 +636,7 @@ var voxpop_views = {
 	}
 };
 
+// Render the Yes and No videos
 (function() {
 		var data = JSON.parse(localStorage.getItem('voxpop.published') || '');
 		var question = data[1];
@@ -652,6 +657,49 @@ var voxpop_views = {
 			if (!collection) return;
 			voxpop_views.answers({id: id, collection: collection});
 		})
+
+}());
+
+
+// Play all button
+(function(){
+
+	document.getElementById('play-all').onclick = function() {
+		var data = JSON.parse(localStorage.getItem('voxpop.published') || '');
+		var question = data[1];
+
+		if (!question) {
+			console.log('no videos to play');
+			return;
+		}
+
+		var videos = [];
+		var num_videos = (question.groupedVideos[0] ? question.groupedVideos[0].length : 0) + (question.groupedVideos[1] ? question.groupedVideos[1].length : 0);
+
+		for (var i = 0; i < num_videos; i++) {
+			videos.push(question.groupedVideos[i%2].shift() || question.groupedVideos[1>>i%2].shift());
+		}
+
+		console.dir(videos);
+
+		if (!videos.length) {
+			return;
+		}
+
+		var first_video = videos.shift();
+
+		var player = document.getElementById('all-player');
+
+		console.log('playing first', first_video.src);
+
+		player.src = first_video.src;
+		player.onended = function(){
+			var next_video = videos.shift();
+			console.log('playing next', next_video.src);
+			player.src = next_video.src;
+		}
+
+	};
 
 }());
 </script>
