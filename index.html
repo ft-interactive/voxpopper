@@ -149,6 +149,16 @@
       font-weight: bold;
     }
 
+    form input {
+      width: 100%;
+      font-size: 20px;
+      margin: 10px 0;
+    }
+
+    .tags .label {
+      font-weight: bold;
+    }
+
   </style>
 </head>
 <body>
@@ -177,8 +187,15 @@
       <h2>Create a new callout</h2>
 
       <form id="create-form">
-        <label>Title</label>
-        <input name="title" id="title" type="text"/>
+      <div>
+        <label>Question</label>
+        <input name="title" id="title" type="textarea"/>
+      </div>
+
+       <div>
+        <label>Tags</label>
+        <input name="tags" id="tags" type="text"/>
+      </div>
         <input name="submit" type="submit" value="Create"/>
       </form>
 
@@ -216,6 +233,7 @@
         id: 1,
         title: "Should European football boycott the next World Cup?",
         published: false,
+        tags: ['#FifaCrisis', '#BlatterOut'],
         videos: [
         {
           src: "https://www.dropbox.com/s/wgwqp3283hxquae/arjun.mp4?raw=1",
@@ -255,6 +273,7 @@
         id: 2,
         title: "#something",
         published: false,
+        tags: [],
         videos: []
       }
       ];
@@ -285,12 +304,14 @@
 
       var sectionTemplate = function(data) {
         return `<div class="title">
-        <h2>${data.title}</h2>
-        <button class="publish">` + (data.published ? `Unpublish` : `Publish`) + `</button>
+          <h2>${data.title}</h2>
+          <div class="tags"><span class="label">Tags: </span>` + data.tags.join(', ') + `</div>
+          <button class="publish">` + (data.published ? `Unpublish` : `Publish`) + `</button>
+
+          </div>
         <div class="video-container">
 
-        </div>
-      </div>`
+        </div>`
     }
 
     var videoTemplate = function(video) {
@@ -422,6 +443,7 @@ document.querySelector('#create-form').addEventListener('submit', function(e) {
   var newPanel = {
     id: newTabId,
     title: document.forms[0].title.value,
+    tags: document.forms[0].tags.value.split(','),
     published: false,
     videos: []
   };
@@ -469,6 +491,7 @@ document.addEventListener('click', function(e) {
     published[data[currentTabIndex].id] = {
       id: data[currentTabIndex].id,
       title: data[currentTabIndex].title,
+      tags: data[currentTabIndex].tags,
       groupedVideos: grouped
     };
   }
