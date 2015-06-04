@@ -437,26 +437,27 @@
       });
 });
 
-Array.prototype.slice.call(document.querySelectorAll('.button-group .selected')).map(function(checkbox) {
-      checkbox.addEventListener('change', function () {
+document.addEventListener('change', function (e) {
 
-        var allVideos =Array.prototype.slice.call( document.querySelector('.video-container').children );
+  if(e.target.getAttribute('type') !== 'checkbox') {
+    return;
+  };
+  var allVideos =Array.prototype.slice.call( document.querySelector('.video-container').children );
 
-        var allTabs =Array.prototype.slice.call( document.querySelector('.tabs').children );
+  var allTabs =Array.prototype.slice.call( document.querySelector('.tabs').children );
 
-        var index = allVideos.indexOf(closest(this, '.video'));
-        var currentTabIndex = allTabs.indexOf(allTabs.filter(function(tab) {
-          return tab.hasAttribute('aria-pressed');
-        })[0]);
+  var index = allVideos.indexOf(closest(e.target, '.video'));
+  var currentTabIndex = allTabs.indexOf(allTabs.filter(function(tab) {
+    return tab.hasAttribute('aria-pressed');
+  })[0]);
 
-        data[currentTabIndex].videos[index].selected = this.checked;
-        if(this.checked) {
-          this.parentElement.parentElement.setAttribute('data-bucket' ,'');
-        } else {
-          this.parentElement.parentElement.removeAttribute('data-bucket');
-        }
-        saveData();
-      });
+  data[currentTabIndex].videos[index].selected = e.target.checked;
+  if(e.target.checked) {
+    e.target.parentElement.parentElement.setAttribute('data-bucket' ,'');
+  } else {
+    e.target.parentElement.parentElement.removeAttribute('data-bucket');
+  }
+  saveData();
 });
 
 document.querySelector('.tabs').addEventListener('click', function (e) {
